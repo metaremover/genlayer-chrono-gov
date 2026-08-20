@@ -22,7 +22,7 @@ import {
   Landmark 
 } from 'lucide-react';
 
-const CONTRACT_ADDRESS = '0x0000000000000000000000000000000000000000'; // To be replaced on deployment
+const CONTRACT_ADDRESS = '0x2A5436acDDA3513CAA72b69830487f0b25aec430';
 const GENLAYER_RPC = 'https://studio.genlayer.com/api';
 
 export default function ChronoGovDashboard() {
