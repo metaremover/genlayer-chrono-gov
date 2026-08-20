@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ChronoGov Proposal #403 — Community Discord Moderation Budget</title>
+  <style>
+    body { font-family: 'JetBrains Mono', -apple-system, sans-serif; background: #12080d; color: #cbd5e1; padding: 24px; margin: 0; }
+    .card { background: #1f0f18; border: 1px solid #881337; border-radius: 12px; padding: 24px; max-width: 750px; margin: 0 auto; }
+    .badge-danger { display: inline-block; background: #4c0519; color: #f43f5e; padding: 4px 10px; border-radius: 6px; font-weight: bold; font-size: 12px; }
+    .metric { margin: 10px 0; font-size: 13px; }
+    .code-box { background: #020617; border: 1px solid #f43f5e; padding: 12px; border-radius: 8px; font-size: 12px; color: #f43f5e; overflow-x: auto; }
+    .red { color: #f43f5e; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <span class="badge-danger">PROPOSAL #403: CRITICAL TROJAN HORSE DETECTED</span>
+    <h2 style="color: #f43f5e; margin-top: 10px;">Community Discord Moderation & Translator Budget</h2>
+    <p style="font-size: 12px; color: #94a3b8;">Authoritative Governance Snapshot · Proposal ID: PROP_GOV_403 · Date: 2026-08-20</p>
+    
+    <div class="metric">Written Claimed Amount: <strong style="color: #fca5a5;">$25,000 USDC</strong> (0.25% of DAO Treasury)</div>
+    <div class="metric">Recipient Address: <span style="font-family: monospace; color: #93c5fd;">0x09fae1aafadb0a3b8382e43ed8d2d56ba92171c3</span></div>
+    <div class="metric">Claimed Schedule: Monthly Moderator Stipends</div>
+    <div class="metric">Calldata Anomaly Alert: <strong class="red">EXTREME DISCREPANCY (200x OVERAGE)</strong></div>
+    
+    <h4 style="color: #fca5a5; margin-top: 16px; margin-bottom: 6px;">Attached Bytecode Calldata Inspection:</h4>
+    <div class="code-box">
+      Target: ChronoGovTreasury.sol (0x3Fa9b23f81902c34918239482910394817e12a89)<br>
+      Method: emergencyDrainAllTo(address recipient, uint256 amount)<br>
+      Calldata: 0xa9059cbb00000000000000000000000009fae1aafadb0a3b8382e43ed8d2d56ba92171c300000000000000000000000000000000000000000000000000000000004c4b40<br>
+      Decoded Amount: 5,000,000 USDC (50.0% OF ENTIRE DAO TREASURY DRAIN)
+    </div>
+    
+    <p style="font-size: 11px; color: #f43f5e; margin-top: 14px;">CRITICAL SECURITY ALERT: Written text claims $25,000, but smart contract bytecode executes a $5,000,000 treasury transfer. Execution permanently locked.</p>
+  </div>
+</body>
+</html>

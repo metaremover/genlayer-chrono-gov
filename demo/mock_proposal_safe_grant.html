@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ChronoGov Proposal #402 — Community Developer Tooling Grant</title>
+  <style>
+    body { font-family: 'JetBrains Mono', -apple-system, sans-serif; background: #080d1a; color: #cbd5e1; padding: 24px; margin: 0; }
+    .card { background: #0f172a; border: 1px solid #1e293b; border-radius: 12px; padding: 24px; max-width: 750px; margin: 0 auto; }
+    .badge-safe { display: inline-block; background: #064e3b; color: #6ee7b7; padding: 4px 10px; border-radius: 6px; font-weight: bold; font-size: 12px; }
+    .metric { margin: 10px 0; font-size: 13px; }
+    .code-box { background: #020617; border: 1px solid #1e293b; padding: 12px; border-radius: 8px; font-size: 12px; color: #38bdf8; overflow-x: auto; }
+    .green { color: #34d399; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <span class="badge-safe">PROPOSAL #402: LEGITIMATE COMMUNITY GRANT</span>
+    <h2 style="color: #f8fafc; margin-top: 10px;">ChronoGov SDK & Developer Tooling Sub-Grant</h2>
+    <p style="font-size: 12px; color: #94a3b8;">Authoritative Governance Snapshot · Proposal ID: PROP_GOV_402 · Date: 2026-08-20</p>
+    
+    <div class="metric">Requested Funding Amount: <strong class="green">$50,000 USDC</strong> (0.5% of DAO Treasury)</div>
+    <div class="metric">Recipient Address: <span style="font-family: monospace; color: #93c5fd;">0x71546f55c131acd54cf93e181b9cabaeaf440fc3</span></div>
+    <div class="metric">Milestone Schedule: 4 Staged Tranches (25% Kickoff, 25% Alpha SDK, 25% Testnet, 25% Final Docs)</div>
+    <div class="metric">Voting Gini Concentration: <strong class="green">0.24 (Decentralized Retail Distribution)</strong></div>
+    <div class="metric">Total Participating Wallets: <strong>1,420 Independent Voters</strong></div>
+    
+    <h4 style="color: #e2e8f0; margin-top: 16px; margin-bottom: 6px;">Attached Bytecode Calldata Inspection:</h4>
+    <div class="code-box">
+      Target: ChronoGovTreasury.sol (0x3Fa9b23f81902c34918239482910394817e12a89)<br>
+      Method: createMilestoneGrant(bytes32 propId, address recipient, uint256 totalAmount, uint8 tranches)<br>
+      Calldata: 0x48a109fc00000000000000000000000071546f55c131acd54cf93e181b9cabaeaf440fc3000000000000000000000000000000000000000000000000000000000000c350<br>
+      Decoded Amount: 50,000 USDC (EXACT MATCH TO WRITTEN GRANT)
+    </div>
+    
+    <p style="font-size: 11px; color: #64748b; margin-top: 14px;">Semantic Intent vs Bytecode Match: 100% Concordant. Zero exploit vector detected. Safe for staged milestone release.</p>
+  </div>
+</body>
+</html>
