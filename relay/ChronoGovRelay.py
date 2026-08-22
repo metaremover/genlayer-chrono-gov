@@ -7,8 +7,8 @@ Treasury Escrow execution (ChronoGovTreasury.sol) bound strictly to verified cou
 
 Production EVM Web3 Pipeline:
 1. Verifies proposal_id and checks security_verdict:
-   - If APPROVED_MILESTONE_ESCROW -> Builds, signs, broadcasts, and confirms `createMilestoneGrant(...)` on EVM.
-   - If BLOCKED_TROJAN_DISCREPANCY -> Builds, signs, broadcasts, and confirms `freezeProposalExecution(...)` on EVM.
+   - If APPROVED_MILESTONE_ESCROW -> Builds, signs, broadcasts, and confirms `createMilestoneGrant(bytes32, address, uint256, uint8)` on EVM.
+   - If BLOCKED_TROJAN_DISCREPANCY -> Builds, signs, broadcasts, and confirms `freezeProposalExecution(bytes32, string)` on EVM.
 2. Zero Simulated Fallbacks: Fails closed on any RPC or contract error.
 3. Confirms On-Chain EVM Receipts: Polls for transaction receipt and validates status == 1.
 """
@@ -45,14 +45,14 @@ EVM_TREASURY_ADDRESS = os.getenv("EVM_TREASURY_ADDRESS", "0x3Fa9b23f81902c349182
 RELAY_PRIVATE_KEY = os.getenv("RELAY_PRIVATE_KEY", "")
 POLL_INTERVAL_SECONDS = int(os.getenv("POLL_INTERVAL_SECONDS", "30"))
 
-# Minimal ABI for ChronoGovTreasury.sol
+# Exact ABI matching ChronoGovTreasury.sol (uint8 tranches)
 TREASURY_ABI = [
     {
         "inputs": [
             {"internalType": "bytes32", "name": "proposalId", "type": "bytes32"},
             {"internalType": "address", "name": "recipient", "type": "address"},
             {"internalType": "uint256", "name": "totalAmount", "type": "uint256"},
-            {"internalType": "uint256", "name": "tranchesCount", "type": "uint256"}
+            {"internalType": "uint8", "name": "tranches", "type": "uint8"}
         ],
         "name": "createMilestoneGrant",
         "outputs": [],
@@ -153,7 +153,8 @@ class EvmTreasuryRelay:
             contract = self.w3.eth.contract(address=Web3.to_checksum_address(self.treasury_address), abi=TREASURY_ABI)
             p_bytes32 = self.to_bytes32(proposal_id)
             recip_addr = Web3.to_checksum_address(recipient)
-            amount_wei = Web3.to_wei(amount, 'mwei') # USDC 6 decimals
+            amount_wei = int(amount) * (10**18) # Exact 18 decimals asset unit for native treasury transfer
+            tranches_uint8 = int(tranches)
 
             nonce = self.w3.eth.get_transaction_count(self.sender_address)
             gas_price = self.w3.eth.gas_price
@@ -162,7 +163,7 @@ class EvmTreasuryRelay:
                 p_bytes32,
                 recip_addr,
                 amount_wei,
-                tranches
+                tranches_uint8
             ).build_transaction({
                 'from': self.sender_address,
                 'nonce': nonce,
@@ -252,12 +253,13 @@ def run_relay(tracked_proposals: list):
                 verdict = p_data.get("security_verdict", "BLOCKED")
                 threat = p_data.get("threat_class", "CRITICAL")
                 amount = int(p_data.get("claimed_amount_usdc", 0))
+                tranches = int(p_data.get("tranches_count", 4))
                 recipient = p_data.get("proposer", "0x09fae1aafadb0a3b8382e43ed8d2d56ba92171c3")
 
-                logging.info(f"Proposal {p_id}: Verdict={verdict} | ThreatClass={threat} | Amount=${amount:,} USDC")
+                logging.info(f"Proposal {p_id}: Verdict={verdict} | ThreatClass={threat} | Amount=${amount:,} USDC | Tranches={tranches}")
 
                 if verdict == "APPROVED_MILESTONE_ESCROW":
-                    evm_relay.execute_grant_release(p_id, recipient, amount, 4)
+                    evm_relay.execute_grant_release(p_id, recipient, amount, tranches)
                 elif verdict == "BLOCKED_TROJAN_DISCREPANCY":
                     evm_relay.execute_security_freeze(p_id, "Trojan Horse Bytecode Discrepancy Detected")
 
